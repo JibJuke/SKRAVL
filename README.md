@@ -21,10 +21,17 @@ Run the following command:
 npm install
 ```
 
-### Step 3. Add Firebase credentials
+### Step 3. Set up Firebase credentials
 
-Create a file named `.env` in the root directory of the project.
-Copy the contents from the FirebaseKeys.txt file you received and paste them into the `.env` file.
+1. Rename the `.env-example` file to `.env`
+2. Replace the placeholder values with the actual Firebase credentials from the FirebaseKeys.txt file you received personally.
+
+```
+# Example of how your .env file should look
+VITE_FIREBASE_API_KEY=actual_key_from_firebasekeys_txt
+VITE_FIREBASE_AUTH_DOMAIN=actual_domain_from_firebasekeys_txt
+...etc
+```
 
 ### Step 4. Run the application
 

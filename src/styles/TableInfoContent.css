@@ -1,0 +1,57 @@
+.table-info-content {
+  padding: 0.5rem;
+}
+
+.table-info-content .table-title {
+  color: var(--text);
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+}
+
+.table-info-content .table-description {
+  color: var(--text);
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Map section container - NO SIZING OR POSITIONING STYLES */
+.table-info-content .map-section {
+  margin-top: 1.25rem;
+  background-color: transparent; /* Override previous styles */
+  box-shadow: none; /* Override previous styles */
+  padding: 0; /* Override previous styles */
+}
+
+.table-info-content h3 {
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.table-info-content .location-info {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table-info-content .location-name {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.table-info-content .zone-info {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #777);
+}
+
+.table-info-content .empty-state {
+  color: var(--text);
+  font-style: italic;
+  text-align: center;
+}

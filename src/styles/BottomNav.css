@@ -1,0 +1,113 @@
+/* Bottom Navigation */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+/* Custom bottom nav for homepage with single center button */
+.home-bottom-nav {
+  justify-content: center;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.nav-item.active {
+  color: var(--primary);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.nav-icon {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+/* Override general nav-item span styles for create-label */
+.nav-item span {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--primary-light);
+}
+
+.prompt-button {
+  position: relative;
+  top: -15px;
+}
+
+/* Create table button styling */
+.create-table-button {
+  flex: 0;
+  position: relative;
+  top: 0px;
+}
+
+.plus-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: var(--accent-orange);
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Styling specifically for create button */
+.create-table-button .plus-circle {
+  width: auto;
+  min-width: 140px;
+  padding: 0 15px;
+  border-radius: 25px;
+}
+
+/* Increase specificity for the create-label to override the nav-item span */
+.create-table-button .plus-circle .create-label {
+  color: #ffffff !important; /* Using hex color and !important to ensure override */
+  font-weight: bold;
+  margin-left: 8px;
+  font-size: 1.1rem !important;
+  white-space: nowrap;
+}
+
+.plus-circle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+}
+
+.plus-icon {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabled .plus-circle:hover {
+  transform: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

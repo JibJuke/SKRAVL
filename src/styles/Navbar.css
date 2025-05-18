@@ -1,0 +1,121 @@
+.navbar {
+  background-color: var(--primary);
+  padding: 1rem 0 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.navbar-logo {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navbar-logo-img {
+  height: 80px;
+  width: auto;
+  max-width: 100%;
+}
+
+.navbar-menu-icon {
+  display: none;
+  color: var(--white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 1002;
+}
+
+.navbar-menu {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  margin-left: 1.5rem;
+}
+
+.navbar-menu li a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.menu-icon {
+  margin-right: 0.5rem;
+}
+
+.navbar-menu li a:hover {
+  color: var(--accent-orange);
+}
+
+@media (max-width: 768px) {
+  .navbar-menu-icon {
+    display: block;
+  }
+
+  .navbar-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: #1e2257;
+    padding: 5rem 1rem 1rem;
+    box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    transition: right 0.3s ease-in-out;
+    align-items: flex-start;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-menu.active {
+    right: 0;
+  }
+
+  .navbar-logo-img {
+    height: 70px;
+  }
+
+  .navbar-menu li {
+    margin: 1rem 0;
+    width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.5rem;
+  }
+
+  .navbar-menu li:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    color: var(--white);
+    font-size: 1.2rem;
+  }
+
+  .menu-icon {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+  }
+}

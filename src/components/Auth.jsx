@@ -157,7 +157,7 @@ const Auth = () => {
                   className="dev-login-button"
                   onClick={() => handleAutoLogin("adam")}
                 >
-                  Login as Adam
+                  Login as John
                 </button>
                 <button
                   type="button"

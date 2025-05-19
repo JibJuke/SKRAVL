@@ -50,7 +50,7 @@ const TableInfoContent = ({ table }) => {
    */
   const handleMapError = (e) => {
     const currentSrc = e.target.src;
-    console.error("Error loading map image:", currentSrc);
+    console.log("No table image for zone, using Default");
 
     // Try different file extensions if the current one fails
     if (currentSrc.endsWith("-map.png")) {
@@ -64,7 +64,8 @@ const TableInfoContent = ({ table }) => {
     }
 
     // If all extensions failed or it's not a path we can fix, use default
-    setMapImageError(true);
+    // Setting to false instead of true to allow table icon to remain visible
+    setMapImageError(false);
     setMapSrc("/images/default-map.png");
   };
 

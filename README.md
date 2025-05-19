@@ -60,3 +60,30 @@ npm run preview  # To preview the production build
   - `/hooks` - Custom React hooks
   - `/styles` - CSS stylesheets
   - `/utils` - Utility functions
+
+## CI/CD with GitHub Actions & Firebase
+
+This project uses GitHub Actions to automatically build and deploy to Firebase Hosting:
+
+- **Pull Request Previews**: Every PR creates a unique preview URL for testing.
+- **Production Deployment**: Merges to `main` branch automatically deploy to the live site.
+
+### Setting up CI/CD for Contributors
+
+1. The repository needs a Firebase service account key:
+
+   ```bash
+   # Run this once to set up GitHub Actions for Firebase
+   firebase init hosting:github
+   ```
+
+2. Set up required GitHub Secrets:
+
+   - `FIREBASE_SERVICE_ACCOUNT_SKRAVL_APP`: Added automatically by the Firebase CLI
+   - Environment variables from `.env.example` (add all VITE\_\* variables)
+
+3. Local development remains unchanged:
+   - Use your local `.env` file (kept private via `.gitignore`)
+   - Run `npm run dev` for local development
+
+> **Note**: Firebase Web API keys are safe to expose in preview deployments as Firebase security rules protect your data.

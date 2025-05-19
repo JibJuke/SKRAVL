@@ -82,6 +82,7 @@ const CreateTableModal = ({ onClose }) => {
    */
   const handleMapError = (e) => {
     const currentSrc = e.target.src;
+    console.log("No table image for zone, using Default");
 
     // Try different file extensions
     if (currentSrc.endsWith("-map.png")) {
@@ -92,9 +93,9 @@ const CreateTableModal = ({ onClose }) => {
       return;
     }
 
-    // If all extensions fail, use default map but don't prevent clicks
+    // If all extensions fail, use default map and still allow table placement
     setMapSrc("/images/default-map.png");
-    setMapError(false); // Allow clicks on default map
+    setMapError(false); // Allow clicks and show table icon on default map
   };
 
   /**

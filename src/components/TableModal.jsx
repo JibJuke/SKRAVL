@@ -74,7 +74,7 @@ const TableModal = ({ table, onClose, onJoin }) => {
    * @param {React.SyntheticEvent} e - Error event from image load failure
    */
   const handleMapError = (e) => {
-    console.error("Error loading map image:", e.target.src);
+    console.log("No table image for zone, using Default");
 
     // Try different file extensions
     const currentSrc = e.target.src;
@@ -86,8 +86,8 @@ const TableModal = ({ table, onClose, onJoin }) => {
       return;
     }
 
-    // If all extensions fail, use default
-    setMapError(true);
+    // If all extensions fail, use default map but allow table icon to be visible
+    setMapError(false);
     setMapSrc("/images/default-map.png");
   };
 

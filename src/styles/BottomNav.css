@@ -16,6 +16,8 @@
 /* Custom bottom nav for homepage with single center button */
 .home-bottom-nav {
   justify-content: center;
+  background-color: transparent;
+  box-shadow: none;
 }
 
 .nav-item {
@@ -60,7 +62,7 @@
 .create-table-button {
   flex: 0;
   position: relative;
-  top: 0px;
+  top: -15px;
 }
 
 .plus-circle {

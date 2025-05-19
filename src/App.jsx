@@ -10,6 +10,7 @@ import { useAuth } from "./hooks/useAuth";
 import Loading from "./components/Loading";
 import { LocationProvider } from "./contexts/LocationContext";
 
+// Add a small comment to trigger a new CI/CD deployment
 function App() {
   const { user, loading } = useAuth();
 

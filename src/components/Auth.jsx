@@ -95,7 +95,7 @@ const Auth = () => {
     <div className="auth-container">
       <div className="auth-box">
         <div className="auth-header">
-          <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
+          <h2>{isLogin ? "Welcome Back !" : "Create Account"}</h2>
           <p>{isLogin ? "Sign in to continue" : "Join us today"}</p>
         </div>
 

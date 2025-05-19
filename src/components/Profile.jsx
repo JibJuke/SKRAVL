@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { db } from "../firebaseConfig";
 import { useEffect } from "react";
 import "../styles/Profile.css";
@@ -31,10 +32,16 @@ const Profile = () => {
   const [leavingTable, setLeavingTable] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
-  // TODO: Implement email/password change functionality
   const [isPasswordEditable, setIsPasswordEditable] = useState(false);
   const [isEmailEditable, setIsEmailEditable] = useState(false);
   const [email, setEmail] = useState("");
+  const [oldEmail, setOldEmail] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [emailPassword, setEmailPassword] = useState(""); // for reauth
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+
   const [password, setPassword] = useState("******");
 
   // Fetch user data from Firestore when component mounts
@@ -237,22 +244,66 @@ const Profile = () => {
   };
 
   // UI state handlers for email/password editing
-  // Actual update functionality will be implemented in a future update
-  const handleEmailChange = () => {
-    setIsEmailEditable(true);
+  const handleEmailChange = async () => {
+    try {
+      if (!oldEmail || !newEmail || !emailPassword) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      if (user.email !== oldEmail) {
+        alert("Old email does not match your current email.");
+        return;
+      }
+
+      const credential = EmailAuthProvider.credential(oldEmail, emailPassword);
+      await reauthenticateWithCredential(user, credential);
+      await updateEmail(user, newEmail);
+
+      alert("Email updated successfully!");
+      setEmail(newEmail);
+      setOldEmail("");
+      setNewEmail("");
+      setEmailPassword("");
+      setIsEmailEditable(false);
+    } catch (error) {
+      console.error("Error updating email:", error);
+      if (error.code === "auth/wrong-password") {
+        alert("Password is incorrect.");
+      } else {
+        alert(error.message);
+      }
+    }
   };
 
-  const handlePasswordChange = () => {
-    setIsPasswordEditable(true);
+
+  const handlePasswordChange = async () => {
+    try {
+      if (!currentPassword || !newPassword) {
+        alert("Please fill in both fields.");
+        return;
+      }
+
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPassword);
+
+      alert("Password updated successfully!");
+      setIsPasswordEditable(false);
+      setCurrentPassword("");
+      setNewPassword("");
+
+    } catch (error) {
+      console.error("Error updating password:", error);
+      if (error.code === 'auth/wrong-password') {
+        alert('The old password is incorrect.');
+      } else {
+        alert(error.message);
+      }
+    }
   };
 
-  const handleSaveEmail = () => {
-    setIsEmailEditable(false);
-  };
-
-  const handleSavePassword = () => {
-    setIsPasswordEditable(false);
-  };
 
   if (loading) {
     return <div className="profile">Loading...</div>;
@@ -355,49 +406,106 @@ const Profile = () => {
           )}
         </div>
 
-        {/* Account management section (email/password) - future functionality */}
+        {/* Account management section (email/password)*/}
         <div className="profile-login">
           <div className="profile-login-item">
             {isEmailEditable ? (
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="profile-input"
-              />
+              <div className="edit-fields">
+                <input
+                  type="email"
+                  placeholder="Old Email"
+                  value={oldEmail}
+                  onChange={(e) => setOldEmail(e.target.value)}
+                  className="profile-input"
+                />
+                <input
+                  type="email"
+                  placeholder="New Email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="profile-input"
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={emailPassword}
+                  onChange={(e) => setEmailPassword(e.target.value)}
+                  className="profile-input"
+                />
+              </div>
             ) : (
               <p>{user?.email}</p>
             )}
-            <button
-              className="change-button"
-              onClick={isEmailEditable ? handleSaveEmail : handleEmailChange}
-            >
-              {isEmailEditable ? "Save Email" : "Change Email"}
-            </button>
+
+            <div className={`button-row ${isEmailEditable ? "show" : ""}`}>
+              <button
+                className="change-button"
+                onClick={isEmailEditable ? handleEmailChange : () => setIsEmailEditable(true)}
+              >
+                {isEmailEditable ? "Save Email" : "Change Email"}
+              </button>
+              {isEmailEditable && (
+                <button
+                  className="cancel-button"
+                  onClick={() => {
+                    setIsEmailEditable(false);
+                    setOldEmail("");
+                    setNewEmail("");
+                    setEmailPassword("");
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
           </div>
 
+
           <div className="profile-login-item">
-            <p>
-              {isPasswordEditable ? (
+            {isPasswordEditable ? (
+              <div className="edit-fields">
                 <input
                   type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Old Password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
                   className="profile-input"
                 />
-              ) : (
-                "******"
+                <input
+                  type="password"
+                  placeholder="New Password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="profile-input"
+                />
+              </div>
+            ) : (
+              "******"
+            )}
+
+            <div className={`button-row ${isPasswordEditable ? "show" : ""}`}>
+              <button
+                className="change-button"
+                onClick={isPasswordEditable ? handlePasswordChange : () => setIsPasswordEditable(true)}
+              >
+                {isPasswordEditable ? "Save Password" : "Change Password"}
+              </button>
+              {isPasswordEditable && (
+                <button
+                  className="cancel-button"
+                  onClick={() => {
+                    setIsPasswordEditable(false);
+                    setCurrentPassword("");
+                    setNewPassword("");
+                  }}
+                >
+                  Cancel
+                </button>
               )}
-            </p>
-            <button
-              className="change-button"
-              onClick={
-                isPasswordEditable ? handleSavePassword : handlePasswordChange
-              }
-            >
-              {isPasswordEditable ? "Save Password" : "Change Password"}
-            </button>
+            </div>
           </div>
+
+
         </div>
 
         {/* Account actions (logout/delete) */}

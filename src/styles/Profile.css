@@ -253,6 +253,7 @@
   margin-bottom: 1rem;
   width: 100%;
   display: flex;
+  flex-direction: column;
 }
 
 .table-title {
@@ -361,6 +362,15 @@
   padding: 0.5rem;
 }
 
+
+
+.profile input{
+  border: 2px solid var(--border);
+  max-width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
 .change-button {
   background-color: transparent;
   border: var(--primary) 2px solid !important;
@@ -377,10 +387,34 @@
   color: var(--white);
 }
 
+.button-row {
+  transition: 0.4s ease;
+}
+
+.button-row.show{
+  transition: 0.4s ease;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.cancel-button {
+  margin-top: 15px;
+  background-color: var(--primary);
+  color: var(--white);
+  font-weight: bold;
+}
+
 .profile-input {
   flex: 1;
   padding: 0.5rem;
   margin-right: 1rem; /* Adds space between input and button */
   border: 1px solid #ccc;
   border-radius: 0.5rem;
+}
+
+.change-login-button-field {
+  border: 2px solid red;
+  width: 50%;
 }

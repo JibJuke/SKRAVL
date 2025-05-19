@@ -1,12 +1,23 @@
+// Loading.jsx
+import { useState, useEffect } from "react";
 import "../styles/Loading.css";
-/**
- * Loading indicator component with customizable message.
- * Used throughout the app to indicate loading states.
- */
+
 const Loading = ({ message = "Loading..." }) => {
+  const [visible, setVisible] = useState(false);
+
+  // when mounted, trigger the fade-in
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   return (
-    <div className="loading-overlay">
-      <div className="loading-spinner"></div>
+    <div className={`loading-overlay${visible ? " visible" : ""}`}>
+      <div className="loading-dots">
+        <span />
+        <span />
+        <span />
+      </div>
       <p>{message}</p>
     </div>
   );
